@@ -85,8 +85,8 @@ from config.config_en import Args
 to be added
 
 ## Credits
-1. this project was built upon <br> https://medium.com/@ahtishamshafi9906/how-to-build-a-simple-chat-application-in-fastapi-7bafad755654
-2. spinning donut <br> https://www.a1k0n.net/2011/07/20/donut-math.html
+1. This project was built upon <br> https://medium.com/@ahtishamshafi9906/how-to-build-a-simple-chat-application-in-fastapi-7bafad755654
+2. Spinning donut <br> https://www.a1k0n.net/2011/07/20/donut-math.html
 
 ## License
 
