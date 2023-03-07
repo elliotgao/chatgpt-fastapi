@@ -15,14 +15,14 @@ Python version `== python3.8`
 <i>Technically, it should work on `>= python3.7`, but you will have to edit the module versions accordingly in `install.sh` file</i>
 
 ## Installation
-1. Create and enter a virtual env
+1. At project root, create and enter a `python3.8` virtual environment
 ```
 cd $PROJECT_ROOT
 python3.8 -m venv venv
 source venv/bin/activate
 ```
 
-2. One-click pip module installation through bash script
+2. One bash script installation for all
 ```
 bash ./install.sh
 ```

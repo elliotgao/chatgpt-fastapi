@@ -14,7 +14,7 @@ Python 版本 `== python3.8`
 
 ## 安装
 
-1. 创建并进入虚拟环境
+1. 于项目根目录创建并进入`python3.8`虚拟环境
 ```
 cd $PROJECT_ROOT
 python3.8 -m venv venv
