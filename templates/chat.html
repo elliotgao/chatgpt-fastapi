@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>{{roomName}}</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+    <!-- Latest compiled and minified CSS -->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/chatgpt.css">
+    <!-- jQuery library -->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!--    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>-->
+    <script src="static/jquery/jquery-3.5.1.min.js"></script>
+    <style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        .card {
+            position: absolute;
+            width: 95%;
+            height: 90%;
+            box-shadow: 0px 0px 5px gray;
+            left: 2.5%;
+            top: 5%;
+        }
+        #profile {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            transform: translateY(-0%);
+            text-overflow: ellipsis;
+            width: 14%;
+            max-width: 14%;
+            font-size: 80%;
+        }
+        .card-body {
+            display: flex;
+            height: 100vh;
+            flex-direction: row;
+        }
+        #left-panel {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            top: 5%;
+            left: 1.3%;
+            width: 63%;
+            max-width: 63%;
+            height: 80%;
+            max-height: 80%;
+            box-shadow: 0px 0px 6px gray;
+        }
+        #naviTab {
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            gap: 12%;
+            width: 35%;
+            max-width: 35%;
+            max-height: 10%;
+        }
+        #messages-btn {
+            padding-left: 10px;
+            color: black;
+            font-weight: bold;
+        }
+        #histMessages-btn {
+            color: gray;
+            font-weight: normal;
+        }
+        .msgContent {
+            overflow: auto;
+            white-space: pre-wrap;
+            padding-bottom: 0%;
+            padding-left: 1%;
+            padding-top: 1%;
+        }
+        #histMessages {
+            display: none;
+        }
+        #chat-form {
+            position: absolute;
+            left: 1.3%;
+            bottom: 3%;
+            width: 63%;
+            max-width: 63%;
+            height: 11%;
+            max-height: 11%;
+        }
+        #chat-form textarea {
+            resize: none;
+            top: 0%;
+            left: 0%;
+            padding-right: 0%;
+            width: 93%;
+            max-width: 93%;
+            height: 100%;
+            max-height: 100%;
+        }
+        #chat-form button {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            left: 93%;
+            top: 0%;
+            width: 7%;
+            max-width: 7%;
+            height: 100%;
+            max-height: 100%;
+            transform: translateX(-0%);
+        }
+        #right-panel {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            top: 5%;
+            left: 65.8%;
+            width: 33%;
+            max-width: 33%;
+            height: 92%;
+            max-height: 92%;
+            box-shadow: 0px 0px 6px gray;
+        }
+        .rtMsgContent {
+            overflow: auto;
+            white-space: pre-wrap;
+            color: {{chatgptColor}};
+            padding-bottom: 0%;
+            padding-left: 1%;
+            padding-top: 1%;
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+    <script>
+        function openTab(evt, tabName) {
+            var tabcontent = document.getElementsByClassName("msgContent");
+            for (var i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            var tablinks = document.getElementsByClassName("navi-tablinks");
+            for (var i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+                tablinks[i].style.color = "gray";
+                tablinks[i].style.fontWeight = "normal";
+                if (tablinks[i].id == tabName + "-btn") {
+                    tablinks[i].style.color = "black";
+                    tablinks[i].style.fontWeight = "bold";
+                }
+            }
+            document.getElementById(tabName).style.display = "block";
+            // document.getElementById(tabName).style.background-color: #fff;
+            evt.currentTarget.className += " active";
+        }
+        function copyText(text) {
+            var input = document.createElement("textarea");
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand("copy");
+            document.body.removeChild(input);
+            alert("{{COPY_ALERT}}");
+        }
+        document.addEventListener('click', function(event) {
+            var target = event.target;
+            if (target.innerText == "Copy code") {
+                var codeText = target.parentElement.parentElement.parentElement.children[1].textContent
+                copyText(codeText);
+            }
+        });
+        function checkScrollable(chatWindow) {
+            var doScroll = chatWindow.prop('scrollHeight') - (chatWindow.prop('scrollTop') + chatWindow.prop('clientHeight')) < 3;
+            return doScroll;
+        }
+
+        $(document).ready(function(){
+            var current_user;
+
+            // obtain user and other info
+            $.get("/api/current_user",function(response){
+                current_user = response;
+                $("#profile").html("<i>{{currentUser}}: " + current_user + "</i>");
+            });
+
+            // create websocket
+            var hostname = $(location).attr('host');
+            var socket = new WebSocket("ws://" + hostname + "/api/chat");
+            socket.addEventListener('close', function (event) {
+                console.log('disconnected');
+                $("#messages").append("{{disconnectMsg}}")
+                $("#histMessages").append("{{disconnectMsg}}")
+                $("#rt-messages").append("{{disconnectMsg}}")
+            });
+
+            // upon receiving message
+            socket.onmessage = function(event) {
+                var data = JSON.parse(event.data);
+                var message = data['message'];
+                var time = data['time_str'];
+                var sender = data['sender'];
+                var receiver = data['receiver'];
+                var italic = data['italic'];
+                var strong = data['strong'];
+                var color = data['color'];
+                var complete = data['complete'];
+
+                if (complete) {
+                    var chatWindow = $("#messages");
+                    var doScroll = checkScrollable(chatWindow);
+
+                    // create text head
+                    var textHead = "";
+                    var textHeadElement = $("<span></span>");
+                    if (time.length > 0)
+                        textHead = textHead + "[" + time + "] ";
+                    if (sender.length > 0)
+                        textHead = textHead + "<strong>" + sender + ": </strong>";
+                    if (receiver.length > 0)
+                        textHead = textHead + " >> " + receiver + "\n";
+                    if (textHead.length > 0) {
+                        if (strong)
+                            textHead = "<strong>" + textHead + "</strong>";
+                        if (italic)
+                            textHead = "<i>" + textHead + "</i>";
+                        if (color.length > 0)
+                            textHead = "<font color=\"" + color + "\">" + textHead + "</font>";
+                        textHeadElement.css("vertical-align", "top");
+                        textHeadElement.html(textHead);
+                        chatWindow.append(textHeadElement);
+                    }
+
+                    // create text body
+                    var textBodyElement = $("<span></span>");
+                    if (message.length > 0) {
+                        if (strong)
+                            textBodyElement.css("font-weight", "bold");
+                        if (italic)
+                            textBodyElement.css("font-style", "italic");
+                        if (color.length > 0)
+                            textBodyElement.css("color", color);
+                        if (receiver.length === 0)
+                            textBodyElement.css("display", "inline-block");
+                        textBodyElement.css("vertical-align", "top");
+                        textBodyElement.text(message);
+                        chatWindow.append(textBodyElement);
+                    }
+                    chatWindow.append($("<div></div>"));
+                    if (doScroll)
+                        chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
+
+                    // copy to personal history panel
+                    if (sender == current_user || receiver == current_user) {
+                        var chatWindow = $("#histMessages");
+                        var doScroll = checkScrollable(chatWindow);
+
+                        if (textHead.length > 0)
+                            chatWindow.append(textHeadElement.clone());
+                        if (message.length > 0)
+                            chatWindow.append(textBodyElement.clone());
+                        chatWindow.append($("<div></div>"));
+
+                        if (doScroll)
+                            chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
+                    }
+
+                    if (data['receiver'].length > 0) {
+                        var chatWindow = $("#rt-messages");
+                        chatWindow[0].innerHTML = "";
+                    }
+                } else {
+                    var chatWindow = $("#rt-messages");
+                    var doScroll = checkScrollable(chatWindow);
+
+                    var content = message;
+                    if (time.length > 0) {
+                        timeTxt = "[" + time + "]\n";
+                        var senderTxt = "";
+                        if (sender.length > 0)
+                            senderTxt = sender;
+                        var receiverTxt = "";
+                        if (receiver.length > 0)
+                            receiverTxt = " >> " + receiver + "\n\n";
+                        content = timeTxt + senderTxt + receiverTxt + content;
+                    }
+                    chatWindow.text(chatWindow.text() + content);
+
+                    if (doScroll)
+                        chatWindow.scrollTop(chatWindow.prop('scrollHeight'));
+                }
+            };
+            $("#chat-form").on("submit", function(e){
+                e.preventDefault();
+
+                var textBox = $("#chat-text");
+                var message = textBox.val();
+                if (message){
+                    data = {
+                        "sender": current_user,
+                        "message": message
+                    };
+                    socket.send(JSON.stringify(data));
+                    textBox.val("@chatgpt ");
+                    document.cookie = 'X-Authorization=; path=/;';
+                }
+            });
+            $("#chat-text").keypress(function (e) {
+                if(e.which === 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $("#chat-form").submit();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="chat-body card">
+        <h4 class="card-title text-center"><strong> {{roomName}} </strong></h4>
+        <p id="profile"></p>
+        <!--<hr>-->
+        <div class="card-body">
+            <!-- Left Panel -->
+            <div id="left-panel">
+                <div id="naviTab">
+                    <span><button class="navi-tablinks" id="messages-btn" onclick="openTab(event, 'messages')">{{showAll}}</button></span>
+                    <span><button class="navi-tablinks" id="histMessages-btn" onclick="openTab(event, 'histMessages')">{{showSelf}}</button></span>
+                </div>
+                <hr>
+                <div class="msgContent" id="messages"></div>
+                <div class="msgContent" id="histMessages"></div>
+            </div>
+
+            <!-- Input Text Panel -->
+            <form class="chat-form" id="chat-form">
+                <textarea id="chat-text" class="form-control" placeholder="{{textHint}}">@chatgpt </textarea>
+                <button id="send" type="submit" class="btn btn-primary">{{sendButton}}</button>
+            </form>
+
+            <!-- Right Panel -->
+            <div id="right-panel">
+                <span>{{realtimePanel}}</span>
+                <hr>
+                <span class="rtMsgContent" id="rt-messages"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>{{roomName}}</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+    <!-- Latest compiled and minified CSS -->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!--    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>-->
+    <script src="static/jquery/jquery-3.5.1.min.js"></script>
+    <script src="static/js/donut.js"></script>
+    <style>
+        .card {
+            position: absolute;
+            width: 95%;
+            height: 80%;
+            box-shadow: 0px 0px 5px gray;
+            left: 2.5%;
+            top: 5%;
+        }
+        #user-form {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #user-form input {
+            width: 400px;
+            padding-right: 30%;
+        }
+        #user-form button {
+            position: absolute;
+            left: 75%;
+            margin-left: 2px;
+            width: 100%;
+        }
+    </style>
+</head>
+<script>
+        jQuery["postJSON"] = function( url, data, callback ) {
+            // shift arguments if data argument was omitted
+            if ( jQuery.isFunction( data ) ) {
+                callback = data;
+                data = undefined;
+            }
+
+            return jQuery.ajax({
+                url: url,
+                type: "POST",
+                contentType:"application/json; charset=utf-8",
+                dataType: "json",
+                data: data,
+                success: callback
+            });
+        };
+
+        $(document).ready(function(){
+            $("#user-form").on("submit", function(e){
+                e.preventDefault();
+                var current_user = $("#user_input").val();
+                if (current_user){
+                    data = {"username": current_user};
+                    $.postJSON('/api/register', JSON.stringify(data), function(response){
+                        if (response.status) {
+                            $(".chat-body").removeClass("hide");
+                            $(".chat-register").addClass("hide");
+                            window.location.href = "/chat";
+                        } else {
+                            alert("{{userNameTaken}}");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+<body onload="anim2();">
+    <div class="chat-body card">
+        <div class="card-body">
+            <h4 class="card-title text-center"> {{roomName}} </h4>
+            <hr>
+
+            <!-- donut code -->
+            <pre id="donut-ascii" style="display: none;"></pre>
+            <canvas id="donut-canvas" style="display: flex; position: absolute; width: 20%; height: 40%; left: 40%;" width="300" height="240"></canvas>
+
+            <!--<div class="donut"></div>-->
+            <form class="form-inline" id="user-form">
+                <div class="row">
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="user_input" placeholder="{{nickNameHint}}">
+                    </div>
+                    <div class="col-4">
+                        <button id="start" type="submit" class="btn btn-primary">{{enterRoomButton}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
