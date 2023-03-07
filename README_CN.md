@@ -6,6 +6,8 @@
 
 这是一个 Python 的一站式项目。 我个人为了尝试不同的上下文/提示工程而构建了它。 希望这个项目能帮助到您。
 
+![image](./doc/sample1_cn.png)
+
 ## 系统要求
 
 在`MacOS`和`Ubuntu20 LTS`上进行了测试
@@ -57,8 +59,6 @@ chatgpt launched
 要停止服务器，请执行 `bash ./app.sh stop`
 
 现在，打开浏览器并访问 http://0.0.0.0:8080。 享受吧！
-
-![image](./doc/sample1_cn.png)
 
 ## 切换语言
 

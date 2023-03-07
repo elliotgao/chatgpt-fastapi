@@ -6,6 +6,8 @@ If you are a Python person, and looking for a simple web interface to try out Op
 
 This is a Python one-stop shop project that I built myself to try out different context/prompt engineering. I hope you will find it useful.
 
+![image](./doc/sample1_en.png)
+
 ## System Requirement
 
 Tested on `MacOS` and `Ubuntu20 LTS`
@@ -57,7 +59,6 @@ To stop the server, execute `bash ./app.sh stop`
 
 Now, open web browser and visit http://0.0.0.0:8080. Enjoy
 
-![image](./doc/sample1_en.png)
 
 ## Switch Language
 
