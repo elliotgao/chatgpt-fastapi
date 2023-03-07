@@ -24,7 +24,7 @@ python3.8 -m venv venv
 source venv/bin/activate
 ```
 
-2. Install modules through pip
+2. One-click pip module installation through bash script
 ```
 bash ./install.sh
 ```
