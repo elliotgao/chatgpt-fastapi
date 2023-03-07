@@ -17,8 +17,6 @@ Python version `== python3.8`
 ## Installation
 1. Create and enter a virtual env
 ```
-PROJECT_ROOT="./"
-
 cd $PROJECT_ROOT
 python3.8 -m venv venv
 source venv/bin/activate

@@ -8,16 +8,14 @@
 
 在`MacOS`和`Ubuntu20 LTS`上进行了测试
 
-Python 版本 == python3.8
+Python 版本 `== python3.8`
 
-技术上，它应该在>=python3.7上工作，但是您将不得不相应地编辑install.sh文件中的模块版本
+技术上，它应该在`>=python3.7`上工作，但是您将不得不相应地编辑`install.sh`文件中的模块版本
 
 ## 安装
 
 1. 创建并进入虚拟环境
 ```
-PROJECT_ROOT="./"
-
 cd $PROJECT_ROOT
 python3.8 -m venv venv
 source venv/bin/activate
