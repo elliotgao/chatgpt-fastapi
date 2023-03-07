@@ -84,3 +84,6 @@ from config.config_en import Args
 ## Common Issues
 to be added
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
