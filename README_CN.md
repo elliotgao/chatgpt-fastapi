@@ -83,6 +83,11 @@ from config.config_en import Args
 ## 常见问题
 待添加
 
+## 致谢
+1. 这个项目是在这个帖子的基础上搭建的 <br> https://medium.com/@ahtishamshafi9906/how-to-build-a-simple-chat-application-in-fastapi-7bafad755654
+2. 旋转甜甜圈 <br> https://www.a1k0n.net/2011/07/20/donut-math.html
+
+
 ## 许可证
 
 本项目使用 MIT 许可证许可。
