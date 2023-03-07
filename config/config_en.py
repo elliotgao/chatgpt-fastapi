@@ -36,7 +36,7 @@ class Args:
     """
     client web variables
     """
-    CHAT_ROOM_NAME = 'ChatGPT Multi-Person Chatroom'
+    CHAT_ROOM_NAME = 'ChatGPT Group Chatroom'
     ENTER_ROOM_BUTTON = 'Enter'
     USER_NAME_HINT = 'input your nick name'
     USER_NAME_TAKEN_ALERT = 'nick name taken!'

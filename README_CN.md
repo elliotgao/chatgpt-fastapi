@@ -58,7 +58,7 @@ chatgpt launched
 
 现在，打开浏览器并访问 http://0.0.0.0:8080。 享受吧！
 
-![image](./doc/sample1.png)
+![image](./doc/sample1_cn.png)
 
 ## 切换语言
 要更改语言，您需要同时编辑 `./config` 下的Web文本和 `./prompts` 下的 chatgpt prompts 。有在

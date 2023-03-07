@@ -59,7 +59,7 @@ To stop the server, execute `bash ./app.sh stop`
 
 Now, open web browser and visit http://0.0.0.0:8080. Enjoy
 
-![image](./doc/sample1.png)
+![image](./doc/sample1_en.png)
 
 ## Switch Language
 To change language, you will need to edit both the web text (under `./config`) and chatgpt prompts (under `./prompts`). There are at
