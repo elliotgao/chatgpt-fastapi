@@ -52,14 +52,14 @@ chatgpt launched
 
 请注意，此服务器已与您的终端分离，您可以在不中断服务的情况下关闭终端。
 
-要停止服务器，请执行 bash ./app.sh stop
+要停止服务器，请执行 `bash ./app.sh stop`
 
 现在，打开浏览器并访问 http://0.0.0.0:8080。 享受吧！
 
 ![image](./doc/sample1_cn.png)
 
 ## 切换语言
-要更改语言，您需要同时编辑 `./config` 下的Web文本和 `./prompts` 下的 chatgpt prompts 。有在
+如需要更改语言，您需要同时编辑 `./config` 下的web文本和 `./prompts` 下的 chatgpt prompts 
 ```
 ./config
 ├── config_en.py

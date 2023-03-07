@@ -60,7 +60,7 @@ Now, open web browser and visit http://0.0.0.0:8080. Enjoy
 ![image](./doc/sample1_en.png)
 
 ## Switch Language
-To change language, you will need to edit both the web text (under `./config`) and chatgpt prompts (under `./prompts`). There are at
+To change language, you will need to edit both the web text (under `./config`) and chatgpt prompts (under `./prompts`). They are at
 ```
 ./config
 ├── config_en.py
