@@ -2,17 +2,10 @@ import os
 import time
 import traceback
 from typing import Literal
-from datetime import datetime
 
 import openai
 import tiktoken
-from colorama import Fore, Style
-
-
-def time_now_str(): return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-
-def warn(text: str): print(f"{Fore.RED}{text}{Style.RESET_ALL}")
+from .utils import warn
 
 
 class ChatGPT(object):
