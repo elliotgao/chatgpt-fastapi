@@ -2,9 +2,9 @@
 
 [中文](./README_CN.md)
 
-If you are a python person, and looking for a simple web interface to try out OpenAI chatgpt API, then this is the repo for you. 
+If you are a Python person, and looking for a simple web interface to try out OpenAI chatgpt API, then this is the repo for you. 
 
-This is a python one-stop shop project, I built it myself for the sake of trying out different context/prompt engineering. Hope you will find it useful.
+This is a Python one-stop shop project that I built myself to try out different context/prompt engineering. I hope you will find it useful.
 
 ## System Requirement
 
