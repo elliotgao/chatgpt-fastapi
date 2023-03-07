@@ -1,4 +1,6 @@
-## Chatgpt-FastAPI
+## Chatgpt-FastAPI 
+
+[中文](./README_CN.md)
 
 If you are a python person, and looking for a simple web interface to try out OpenAI chatgpt API, then this is the repo for you. 
 
@@ -31,7 +33,7 @@ bash ./install.sh
 
 Visit openai to obtain your [API key](https://platform.openai.com/account/api-keys) and [Organization ID](https://platform.openai.com/account/org-settings)
 
-Then export to env viriable
+Then export to env variable
 ```
 export OPENAI_API_KEY="sk-abcdef..."
 export OPENAI_ORG_ID="org-zxcvbb..."
