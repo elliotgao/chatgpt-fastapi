@@ -8,7 +8,7 @@ class Args:
     CACHE_DIR: str = './cache'
     REDIS_PATH: str = './cache/redis/redis.db'
     REDIS_MSG_QUEUE: str = 'msg_queue'
-    PROMPTS_DIR: str = './prompts/prompts_zh'
+    PROMPTS_DIR: str = './prompts/prompts_en'
 
     """
     chatgpt variables

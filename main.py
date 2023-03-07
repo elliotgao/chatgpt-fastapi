@@ -5,7 +5,6 @@ from functools import partial
 import traceback
 import pickle
 import time
-from datetime import datetime
 from typing import List, Dict, Union
 import json
 
@@ -35,9 +34,6 @@ from config.config_en import Args
 
 
 builtins.print = partial(print, flush=True)
-
-
-def time_now(): return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 class SocketManager:
@@ -245,14 +241,14 @@ async def chat(websocket: WebSocket):
             user_context_dict[uname] = None
             enter_room_txt = f"{uname} {ENTER_ROOM_MSG} {len(user_context_dict)}"
             response = create_response(enter_room_txt, italic=True)
-            print(f"[{time_now()}] {enter_room_txt}")
+            print(f"[{time_now_str()}] {enter_room_txt}")
             print('users:', set(user_context_dict.keys()))
             await websocket_manager.broadcast(response)
         try:
             while True:
                 data = await websocket.receive_json()
                 _response = create_response(
-                    time_str=f"{time_now()}",
+                    time_str=f"{time_now_str()}",
                     sender=f"{uname}",
                     message=f"{data['message']}",
                 )
@@ -279,7 +275,7 @@ async def chat(websocket: WebSocket):
                 try:
                     leave_room_txt = f"{uname} {EXIT_ROOM_MSG} {len(user_context_dict)}"
                     response = create_response(leave_room_txt, italic=True)
-                    print(f"[{time_now()}] {leave_room_txt}")
+                    print(f"[{time_now_str()}] {leave_room_txt}")
                     print('users:', set(user_context_dict.keys()))
                     await websocket_manager.broadcast(response)
                 except Exception:
@@ -335,7 +331,7 @@ class ChatGPTThread(threading.Thread):
 
     async def alert_empty_input(self, receiver: str):
         response = create_response(f"{EMPTY_INPUT_MSG}",
-                                   time_str=f"{time_now()}",
+                                   time_str=f"{time_now_str()}",
                                    sender=f"{self.uname}",
                                    receiver=f"{receiver}",
                                    color=CHATGPT_TEXT_COLOR)
@@ -355,7 +351,7 @@ class ChatGPTThread(threading.Thread):
         query_summary_html = f"[Q]\n{text[:17]}...\n\n[A]\n"
         response = create_response(
             query_summary_html,
-            time_str=f"{time_now()}",
+            time_str=f"{time_now_str()}",
             sender=f"{self.uname}",
             receiver=f"{receiver}",
             color=CHATGPT_TEXT_COLOR,
@@ -388,7 +384,7 @@ class ChatGPTThread(threading.Thread):
             print()
 
         response = create_response(f"{self.text_to_html(full_content)}",
-                                   time_str=f"{time_now()}",
+                                   time_str=f"{time_now_str()}",
                                    sender=f"{self.uname}",
                                    receiver=f"{receiver}",
                                    color=CHATGPT_TEXT_COLOR,
@@ -439,7 +435,7 @@ class ChatGPTThread(threading.Thread):
                 except Exception:
                     traceback.print_exc()
                     response = create_response(f"{UNKNOWN_RUNTIME_ERR_MSG}",
-                                               time_str=f"{time_now()}",
+                                               time_str=f"{time_now_str()}",
                                                sender=f"{self.uname}",
                                                color=f"{CHATGPT_TEXT_COLOR}")
                     await websocket_manager.broadcast(response)
