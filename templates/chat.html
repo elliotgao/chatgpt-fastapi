@@ -243,7 +243,7 @@
                             textBodyElement.css("font-style", "italic");
                         if (color.length > 0)
                             textBodyElement.css("color", color);
-                        if (receiver.length === 0)
+                        if (receiver.length === 0 && !message.includes("\n"))
                             textBodyElement.css("display", "inline-block");
                         textBodyElement.css("vertical-align", "top");
                         textBodyElement.text(message);
