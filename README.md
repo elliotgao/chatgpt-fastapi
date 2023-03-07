@@ -60,12 +60,22 @@ Now, open web browser and visit http://0.0.0.0:8080. Enjoy
 ![image](./doc/sample1_en.png)
 
 ## Switch Language
-To change language, you will need to edit both the web text (under `./config`) and chatgpt prompts (under `./prompts`). They are at
+
+<br>Step 1: create your own `config_lang.py`, similar to the following files
 ```
 ./config
 ├── config_en.py
 └── config_zh.py
+```
 
+<br>Step 2: change the import in `main.py:32` accordingly
+```
+from config.config_en import Args
+# from config.config_zh import Args
+```
+
+<br>Step 3: create your own prompts, arranging the files in the following way
+```
 ./prompts
 ├── prompts_en
 │   ├── chat-agent.txt
@@ -75,11 +85,8 @@ To change language, you will need to edit both the web text (under `./config`) a
     └── context-summarizer.txt
 ```
 
-then, change the import in `main.py:33`
-```
-from config.config_en import Args
-# from config.config_zh import Args
-```
+<br>Step 4: edit the `config_lang.py` created in step 1, make sure its `PROMPTS_DIR` is assigned with the intended directory. Also edit all the message related variables (line 30:50). Replace them with your desired texts.
+
 
 ## Common Issues
 to be added

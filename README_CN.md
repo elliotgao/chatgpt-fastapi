@@ -59,12 +59,22 @@ chatgpt launched
 ![image](./doc/sample1_cn.png)
 
 ## 切换语言
-如需要更改语言，您需要同时编辑 `./config` 下的web文本和 `./prompts` 下的 chatgpt prompts 
+
+<br>第1步：创建您自己的`config_lang.py`，类似于以下文件
 ```
 ./config
 ├── config_en.py
 └── config_zh.py
+```
 
+<br>第2步：相应地更改`main.py: 32`中的导入
+```
+from config.config_en import Args
+＃from config.config_zh import Args
+```
+
+<br>第3步：创建自己的prompt提示文件，按以下方式排列
+```
 ./prompts
 ├── prompts_en
 │   ├── chat-agent.txt
@@ -74,11 +84,7 @@ chatgpt launched
     └── context-summarizer.txt
 ```
 
-然后，在`main.py:33`中更改导入
-```
-from config.config_en import Args
-# from config.config_zh import Args
-```
+<br>第4步：编辑第1步中创建的`config_lang.py`，确保其`PROMPTS_DIR`赋值了正确的目录路径。还要编辑所有与消息相关的变量（第30至50行）。用您想要的文本替换它们。
 
 ## 常见问题
 待添加
