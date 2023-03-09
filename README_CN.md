@@ -1,8 +1,8 @@
-## Chatgpt-FastAPI
+## ChatGPT-FastAPI
 
 [English](./README.md)
 
-如果你是一个 Python 爱好者，正在寻找一个简单的网络界面来试用 OpenAI Chatgpt API，那么这个仓库就是为你准备的。
+如果你是一个 Python 爱好者，正在寻找一个简单的网络界面来试用 OpenAI ChatGPT API，那么这个仓库就是为你准备的。
 
 这是一个 Python 的一站式项目。 我个人为了尝试不同的上下文/提示工程而构建了它。 希望这个项目能帮助到您。
 

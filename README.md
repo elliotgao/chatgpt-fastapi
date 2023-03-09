@@ -1,8 +1,8 @@
-## Chatgpt-FastAPI 
+## ChatGPT-FastAPI 
 
 [中文](./README_CN.md)
 
-If you are a Python person, and looking for a simple web interface to try out OpenAI chatgpt API, then this is the repo for you. 
+If you are a Python person, and looking for a simple web interface to try out OpenAI ChatGPT API, then this is the repo for you. 
 
 This is a Python one-stop shop project that I built myself to try out different context/prompt engineering. I hope you will find it useful.
 
