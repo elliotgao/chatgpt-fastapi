@@ -62,17 +62,6 @@ function getPID() {
   echo $(ps -ef | grep "$DIR/venv/bin/uvicorn" | grep -v grep | awk '{print $2}')
 }
 PID=$(getPID)
-function launchService() {
-  nohup uvicorn $APP_PATH --host $HOST --port $PORT > $APP_LOG 2>&1 &
-  echo "tail -f -n 100 $APP_LOG"
-  tail -f -n 100 $APP_LOG &
-}
-function alertAppAlreadyRun() {
-  echo -e "$COLOR_RED error: $APP_NAME <$PID> is already running. $RESET"
-}
-function alertAppNotRun() {
-  echo -e "$COLOR_RED error: $APP_NAME is not running. $RESET"
-}
 function kill_tail() {
   kill $(ps aux | grep "tail -f -n 100 $APP_LOG" | awk '{print $2}') > /dev/null 2>&1
 }
@@ -83,6 +72,18 @@ function kill_app() {
   fi
   kill -$signal $PID
   kill_tail
+}
+function launchService() {
+  kill_tail
+  nohup uvicorn $APP_PATH --host $HOST --port $PORT > $APP_LOG 2>&1 &
+  echo "tail -f -n 100 $APP_LOG"
+  tail -f -n 100 $APP_LOG &
+}
+function alertAppAlreadyRun() {
+  echo -e "$COLOR_RED error: $APP_NAME <$PID> is already running. $RESET"
+}
+function alertAppNotRun() {
+  echo -e "$COLOR_RED error: $APP_NAME is not running. $RESET"
 }
 
 case $COMMAND in
