@@ -422,7 +422,7 @@ class ChatGPTThread(threading.Thread):
                     await self.broadcast_stream_body(
                         chatgpt=chatgpt, receiver=sender, text=text, context=context, verbose=True)
                     n_tokens_list = chatgpt.count_context_tokens(user_context_dict[sender])
-                    print(f'[context size]: {n_tokens_list} -> total {sum(n_tokens_list)}')
+                    print(f'[context size]: {n_tokens_list} -> total {sum(n_tokens_list)} tokens')
                     print()
                     # await asyncio.sleep(1.)
 
